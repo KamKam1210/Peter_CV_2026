@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peter Kam — AI Practitioner & Data Analyst</title>
+<style>
+  :root {
+    --bg:       #0d1117;
+    --surface:  #161b22;
+    --border:   #30363d;
+    --blue:     #0055b3;
+    --blue-lt:  #58a6ff;
+    --green:    #3fb950;
+    --text:     #e6edf3;
+    --muted:    #8b949e;
+    --subtle:   #484f58;
+    --shadow:   0 4px 24px rgba(0,0,0,.4);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  a { color: var(--blue-lt); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(13,17,23,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-name { font-weight: 700; font-size: 15px; color: var(--text); letter-spacing: .5px; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 13px; color: var(--muted); transition: color .2s; }
+  .nav-links a:hover { color: var(--blue-lt); text-decoration: none; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 5% 60px;
+    background: radial-gradient(ellipse at 70% 50%, #0d2a4a 0%, var(--bg) 65%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,85,179,.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 860px; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,85,179,.18);
+    border: 1px solid rgba(88,166,255,.25);
+    color: var(--blue-lt); font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 99px; margin-bottom: 20px;
+  }
+  .hero-tag::before { content: '●'; font-size: 8px; color: var(--green); }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 .name-blue {
+    background: linear-gradient(90deg, #58a6ff, #79c0ff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--muted); max-width: 600px;
+    margin-bottom: 32px; line-height: 1.8;
+  }
+  .hero-contacts {
+    display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 36px;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--muted);
+  }
+  .contact-item span { color: var(--text); }
+  .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue); color: #fff;
+    padding: 12px 24px; border-radius: 8px;
+    font-weight: 700; font-size: 14px;
+    border: none; cursor: pointer;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: #0066cc; transform: translateY(-1px); text-decoration: none; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--blue-lt);
+    padding: 12px 24px; border-radius: 8px;
+    font-weight: 700; font-size: 14px;
+    border: 1.5px solid rgba(88,166,255,.4); cursor: pointer;
+    transition: border-color .2s, background .2s;
+    text-decoration: none;
+  }
+  .btn-outline:hover { border-color: var(--blue-lt); background: rgba(88,166,255,.08); text-decoration: none; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex; flex-wrap: wrap; gap: 0;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; margin-top: 48px;
+  }
+  .stat {
+    flex: 1; min-width: 140px; padding: 20px 24px;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-size: 28px; font-weight: 800; color: var(--blue-lt); line-height: 1; }
+  .stat .lbl { font-size: 11px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .8px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 72px 5%; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+  .sec-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--blue-lt);
+    margin-bottom: 8px;
+  }
+  .sec-title {
+    font-size: clamp(22px, 3vw, 30px); font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .sec-sub { color: var(--muted); margin-bottom: 40px; max-width: 640px; }
+  .divider { height: 1px; background: var(--border); margin: 0 5%; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--surface); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 14px; }
+  .skill-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px;
+    transition: border-color .2s;
+  }
+  .skill-card:hover { border-color: var(--blue-lt); }
+  .skill-card .sk-label {
+    font-size: 11px; font-weight: 700; color: var(--blue-lt);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: rgba(88,166,255,.1); border: 1px solid rgba(88,166,255,.2);
+    color: var(--text); font-size: 12px; padding: 3px 10px;
+    border-radius: 99px;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-item { display: flex; gap: 24px; margin-bottom: 36px; position: relative; }
+  .exp-item::before {
+    content: ''; position: absolute; left: 17px; top: 38px;
+    bottom: -36px; width: 1px; background: var(--border);
+  }
+  .exp-item:last-child::before { display: none; }
+  .exp-dot {
+    width: 36px; height: 36px; min-width: 36px;
+    border-radius: 50%; border: 2px solid var(--blue);
+    background: var(--bg); display: flex; align-items: center;
+    justify-content: center; font-size: 14px; margin-top: 2px;
+  }
+  .exp-content { flex: 1; }
+  .exp-header { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; margin-bottom: 4px; }
+  .exp-company { font-size: 16px; font-weight: 700; }
+  .exp-period {
+    font-size: 12px; color: var(--muted);
+    background: rgba(255,255,255,.05); border: 1px solid var(--border);
+    padding: 2px 10px; border-radius: 99px;
+  }
+  .exp-title { font-size: 13px; color: var(--blue-lt); margin-bottom: 10px; font-style: italic; }
+  .exp-content ul { padding-left: 18px; }
+  .exp-content li { font-size: 13.5px; color: var(--muted); margin-bottom: 5px; line-height: 1.6; }
+  .exp-content li strong { color: var(--text); }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--surface); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 18px; }
+  .proj-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px 24px;
+    transition: border-color .2s, transform .2s; position: relative;
+  }
+  .proj-card:hover { border-color: var(--blue-lt); transform: translateY(-2px); }
+  .proj-card.featured { border-color: rgba(0,85,179,.5); }
+  .proj-card.featured::before {
+    content: '★ FEATURED'; position: absolute; top: -1px; right: 16px;
+    background: var(--blue); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 0 0 6px 6px;
+  }
+  .proj-year { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .proj-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .proj-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+  .proj-desc li { margin-bottom: 4px; }
+  .proj-card ul { padding-left: 16px; }
+  .proj-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--blue-lt); font-weight: 600;
+  }
+  .proj-link:hover { text-decoration: underline; }
+  .proj-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .badge {
+    font-size: 11px; padding: 2px 9px; border-radius: 99px;
+    background: rgba(63,185,80,.12); border: 1px solid rgba(63,185,80,.3);
+    color: var(--green); font-weight: 600;
+  }
+
+  /* ── PORTFOLIO CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, #0d2a4a 0%, #0d1117 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 5%;
+    text-align: center;
+  }
+  .cta-section h2 { font-size: clamp(20px,3vw,28px); font-weight: 800; margin-bottom: 10px; }
+  .cta-section p { color: var(--muted); margin-bottom: 28px; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+  /* ── EDUCATION ── */
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 14px; }
+  .edu-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px 22px;
+  }
+  .edu-period { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .edu-inst { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .edu-qual { font-size: 13px; color: var(--blue-lt); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 32px 5%;
+    border-top: 1px solid var(--border);
+    color: var(--subtle); font-size: 12px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .stats-bar { border-radius: 0; }
+    .stat { min-width: 50%; }
+    .exp-item::before { display: none; }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-outline { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="nav-name">Peter Kam</div>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Available for AI & Data Roles · Hong Kong</div>
+    <h1>
+      KAM YAN SHAN<br>
+      <span class="name-blue">PETER</span>
+    </h1>
+    <p class="hero-sub">
+      AI Practitioner & Data Analyst — building multi-agent pipelines, competitive intelligence systems,
+      and data-driven tools that turn raw information into strategic decisions.
+    </p>
+    <div class="hero-contacts">
+      <div class="contact-item">📱 <span>(+852) 12345678</span></div>
+      <div class="contact-item">✉️ <span>peterkam.lab@gmail.com</span></div>
+      <div class="contact-item">🎓 <span>BSc Data Science & AI · HKMU</span></div>
+    </div>
+    <div class="hero-btns">
+      <a href="https://dji-peter-testing.netlify.app/instagram_strategy_report" target="_blank" class="btn-primary">
+        🚀 View Live AI Project
+      </a>
+      <a href="mailto:peterkam.lab@gmail.com" class="btn-outline">
+        ✉️ Get in Touch
+      </a>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="num">5</div>
+        <div class="lbl">AI Agents Built</div>
+      </div>
+      <div class="stat">
+        <div class="num">3,507</div>
+        <div class="lbl">Posts Analysed</div>
+      </div>
+      <div class="stat">
+        <div class="num">+50.8%</div>
+        <div class="lbl">ER Uplift Found</div>
+      </div>
+      <div class="stat">
+        <div class="num">TOP 10</div>
+        <div class="lbl">Start-Up Finalist ×3</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="sec-tag">Capabilities</div>
+    <h2 class="sec-title">Core Skills</h2>
+    <p class="sec-sub">Full-stack AI development from data pipeline to deployed product.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="sk-label">AI & Automation</div>
+        <div class="skill-tags">
+          <span class="tag">Multi-agent pipelines</span>
+          <span class="tag">LLM API integration</span>
+          <span class="tag">Prompt engineering</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sk-label">Data Analysis</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">pandas / numpy</span>
+          <span class="tag">SQL</span>
+          <span class="tag">R</span>
+          <span class="tag">Chart.js</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sk-label">Market Research</div>
+        <div class="skill-tags">
+          <span class="tag">Competitive intelligence</span>
+          <span class="tag">Social media analytics</span>
+          <span class="tag">Consumer insight</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sk-label">App / Web Development</div>
+        <div class="skill-tags">
+          <span class="tag">Swift / SwiftUI</span>
+          <span class="tag">RESTful API</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">HTML / CSS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sk-label">Financial Product Analysis</div>
+        <div class="skill-tags">
+          <span class="tag">Savings product comparison</span>
+          <span class="tag">Insurance benchmarking</span>
+          <span class="tag">Market intelligence</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="sec-tag">Work History</div>
+    <h2 class="sec-title">Experience</h2>
+    <p class="sec-sub">Hands-on across AI engineering, market analysis, and financial advisory.</p>
+
+    <div class="exp-item">
+      <div class="exp-dot">🤖</div>
+      <div class="exp-content">
+        <div class="exp-header">
+          <span class="exp-company">DJI – Guang Chuang Ltd (Hong Kong)</span>
+          <span class="exp-period">Part-time · Apr 2024 – Present</span>
+        </div>
+        <div class="exp-title">AI Marketing Analyst & Multi-role Operations</div>
+        <ul>
+          <li>Built a <strong>5-agent AI marketing pipeline</strong> (company-assigned) generating full campaigns in <strong>4 mins vs. 3+ hours manually</strong> — ~90% reduction in production time</li>
+          <li>Scraped and analysed <strong>3,507 Instagram posts</strong> across 4 accounts; identified DJI Store HK outperforms Insta360 HK by <strong>+50.8% ER</strong> (0.45% vs 0.30%) with only 10.7% of the follower base</li>
+          <li>Engineered a <strong>data-injection layer</strong> feeding live engagement metrics into AI agent prompts, replacing generic outputs with data-backed recommendations</li>
+          <li>Produced interactive <strong>competitive intelligence report & pitch deck</strong> (Chart.js, HTML) deployed on Netlify for stakeholder presentations</li>
+          <li>Multi-role: aerial photography operations, product demonstrations, events</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot">📊</div>
+      <div class="exp-content">
+        <div class="exp-header">
+          <span class="exp-company">FWD Company Limited</span>
+          <span class="exp-period">Full-time · Jul 2024 – Present</span>
+        </div>
+        <div class="exp-title">Wealth Management Consultant — Market Intelligence & Product Analysis</div>
+        <ul>
+          <li>Conduct <strong>systematic comparative analysis</strong> of savings and insurance products across multiple providers</li>
+          <li>Gather and synthesise <strong>market intelligence</strong> on financial product trends for data-driven client recommendations</li>
+          <li><em>(Side project)</em> Developed <strong>HK A&E Waiting Time Tracker</strong> iOS app — integrates HK Open Data APIs for real-time emergency department data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="sec-tag">Portfolio</div>
+    <h2 class="sec-title">Featured Projects</h2>
+    <p class="sec-sub">Real-world AI systems and applications built from scratch.</p>
+    <div class="projects-grid">
+
+      <div class="proj-card featured">
+        <div class="proj-year">2026</div>
+        <div class="proj-title">DJI AI Marketing Intelligence System</div>
+        <div class="proj-badges">
+          <span class="badge">Python</span>
+          <span class="badge">Multi-agent AI</span>
+          <span class="badge">Data Analysis</span>
+        </div>
+        <ul class="proj-desc">
+          <li>5-agent pipeline: Research → SEO → Copywriting → Competitor Analysis → IG Analysis</li>
+          <li>Analysed 938 UGC + 2,569 brand posts; built HK KOL ranking model</li>
+          <li>Interactive HTML report & pitch deck deployed on Netlify</li>
+        </ul>
+        <a href="https://dji-peter-testing.netlify.app/instagram_strategy_report" target="_blank" class="proj-link">
+          ↗ View Live Report
+        </a>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-year">2023 – 2025</div>
+        <div class="proj-title">SEN AI Learning Application</div>
+        <div class="proj-badges">
+          <span class="badge">Generative AI</span>
+          <span class="badge">iOS</span>
+          <span class="badge">Top 10 ×3</span>
+        </div>
+        <ul class="proj-desc">
+          <li>AI-assisted homework screening for students with special educational needs</li>
+          <li>TOP 10 finalist in 3 independent Start-Up competitions</li>
+          <li>Generative AI API + adaptive learning feedback pipeline</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-year">2026</div>
+        <div class="proj-title">HK A&E Waiting Time Tracker</div>
+        <div class="proj-badges">
+          <span class="badge">Swift / SwiftUI</span>
+          <span class="badge">Open Data API</span>
+          <span class="badge">iOS</span>
+        </div>
+        <ul class="proj-desc">
+          <li>Real-time iOS app integrating Hong Kong Open Data APIs</li>
+          <li>JSON parsing, schema mapping, and time normalisation pipeline</li>
+          <li>Designed for practical use in professional advisory workflow</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO CTA ── -->
+<div class="cta-section">
+  <h2>See AI in Action</h2>
+  <p>
+    Explore the live DJI Instagram Competitive Intelligence Report —
+    built entirely with a custom multi-agent AI pipeline and real data.
+  </p>
+  <a href="https://dji-peter-testing.netlify.app/instagram_strategy_report" target="_blank" class="btn-primary" style="display:inline-flex;">
+    🚀 View Live AI Project
+  </a>
+</div>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="section-inner">
+    <div class="sec-tag">Academic Background</div>
+    <h2 class="sec-title">Education</h2>
+    <p class="sec-sub"></p>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-period">2021 – 2023</div>
+        <div class="edu-inst">Hong Kong Metropolitan University</div>
+        <div class="edu-qual">BSc (Hons) in Data Science and Artificial Intelligence</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-period">2019 – 2021</div>
+        <div class="edu-inst">HKU SPACE Community College</div>
+        <div class="edu-qual">Associate of Electronic Engineering</div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px; padding:20px 24px; background:var(--surface); border:1px solid var(--border); border-radius:10px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <div style="font-size:22px;">🌐</div>
+      <div>
+        <div style="font-weight:700; margin-bottom:2px;">Languages</div>
+        <div style="font-size:13px; color:var(--muted);">Cantonese (Native) &nbsp;|&nbsp; English (Professional) &nbsp;|&nbsp; Mandarin (Conversational)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p style="margin-bottom:8px; font-size:14px; color:var(--text); font-weight:600;">KAM YAN SHAN PETER</p>
+  <p>(+852) 12345678 &nbsp;·&nbsp; peterkam.lab@gmail.com</p>
+  <p style="margin-top:8px;">© 2026 · Built with code &amp; AI</p>
+</footer>
+
+</body>
+</html>
