@@ -104,7 +104,10 @@
     border: 1px solid var(--border);
     padding: 6px 14px; border-radius: 99px;
     box-shadow: var(--shadow);
+    text-decoration: none;
+    transition: border-color .2s, background .2s;
   }
+  .contact-item:hover { border-color: var(--blue); background: var(--blue-pale); text-decoration: none; }
   .contact-item span { color: var(--text); font-weight: 500; }
   .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -328,16 +331,13 @@
       and data-driven tools that turn raw information into strategic decisions.
     </p>
     <div class="hero-contacts">
-      <div class="contact-item">📱 <span>(+852) 5115 3305</span></div>
-      <div class="contact-item">✉️ <span>peterkam.lab@gmail.com</span></div>
+      <a href="https://wa.me/85251153305" target="_blank" class="contact-item">📱 <span>(+852) 5115 3305</span></a>
+      <a href="https://mail.google.com/mail/?view=cm&to=peterkam.lab@gmail.com" target="_blank" class="contact-item">✉️ <span>peterkam.lab@gmail.com</span></a>
       <div class="contact-item">🎓 <span>BSc Data Science &amp; AI · HKMU</span></div>
     </div>
     <div class="hero-btns">
       <a href="https://dji-peter-testing.netlify.app/instagram_strategy_report" target="_blank" class="btn-primary">
         📊 View DJI AI Marketing Analysis Report
-      </a>
-      <a href="mailto:peterkam.lab@gmail.com" class="btn-outline">
-        ✉️ Get in Touch
       </a>
     </div>
 
@@ -564,7 +564,7 @@
 <footer>
   <p style="margin-bottom:6px;font-size:14px;color:var(--text);font-weight:700;">KAM YAN SHAN PETER</p>
   <p>(+852) 5115 3305 &nbsp;·&nbsp; peterkam.lab@gmail.com</p>
-  <p style="margin-top:8px;">© 2026 · Built with code &amp; AI</p>
+  <p style="margin-top:8px;">© 2026 Peter Kam</p>
 </footer>
 
 </body>
