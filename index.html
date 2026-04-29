@@ -332,7 +332,7 @@
     </p>
     <div class="hero-contacts">
       <a href="https://wa.me/85251153305" target="_blank" class="contact-item">📱 <span>(+852) 5115 3305</span></a>
-      <a href="https://mail.google.com/mail/?view=cm&to=peterkam.lab@gmail.com" target="_blank" class="contact-item">✉️ <span>peterkam.lab@gmail.com</span></a>
+      <div class="contact-item" onclick="navigator.clipboard.writeText('peterkam.lab@gmail.com').then(()=>{this.querySelector('span').textContent='Copied!';setTimeout(()=>{this.querySelector('span').textContent='peterkam.lab@gmail.com';},1500)})" style="cursor:pointer;">✉️ <span>peterkam.lab@gmail.com</span></div>
       <div class="contact-item">🎓 <span>BSc Data Science &amp; AI · HKMU</span></div>
     </div>
     <div class="hero-btns">
@@ -557,7 +557,7 @@
       <div class="lang-icon">🌐</div>
       <div>
         <div class="lang-title">Languages</div>
-        <div class="lang-detail">Cantonese (Native) &nbsp;|&nbsp; English (Professional) &nbsp;|&nbsp; Mandarin (Conversational)</div>
+        <div class="lang-detail">Cantonese &nbsp;|&nbsp; English &nbsp;|&nbsp; Mandarin</div>
       </div>
     </div>
   </div>
