@@ -290,6 +290,19 @@
   .lang-bar .lang-title { font-weight: 700; margin-bottom: 2px; color: var(--text); }
   .lang-bar .lang-detail { font-size: 13px; color: var(--muted); }
 
+  /* ── COPY TOAST ── */
+  #copy-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #1e293b; color: #fff;
+    padding: 10px 22px; border-radius: 99px;
+    font-size: 13px; font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s, transform .25s;
+    z-index: 9999;
+  }
+  #copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
   /* ── FOOTER ── */
   footer {
     text-align: center; padding: 32px 5%;
@@ -309,6 +322,9 @@
 </style>
 </head>
 <body>
+
+<!-- ── COPY TOAST ── -->
+<div id="copy-toast">✅ Email copied!</div>
 
 <!-- ── NAVBAR ── -->
 <nav>
@@ -332,7 +348,7 @@
     </p>
     <div class="hero-contacts">
       <a href="https://wa.me/85251153305" target="_blank" class="contact-item">📱 <span>(+852) 5115 3305</span></a>
-      <div class="contact-item" onclick="navigator.clipboard.writeText('peterkam.lab@gmail.com').then(()=>{this.querySelector('span').textContent='Copied!';setTimeout(()=>{this.querySelector('span').textContent='peterkam.lab@gmail.com';},1500)})" style="cursor:pointer;">✉️ <span>peterkam.lab@gmail.com</span></div>
+      <div class="contact-item" onclick="navigator.clipboard.writeText('peterkam.lab@gmail.com').then(()=>{var t=document.getElementById('copy-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)})" style="cursor:pointer;">✉️ <span>peterkam.lab@gmail.com</span></div>
       <div class="contact-item">🎓 <span>BSc Data Science &amp; AI · HKMU</span></div>
     </div>
     <div class="hero-btns">
